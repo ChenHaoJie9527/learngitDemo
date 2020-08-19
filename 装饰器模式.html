@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #modal {
+            height: 200px;
+            width: 200px;
+            line-height: 200px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="open">打开</button>
+    <button class="close">关闭</button>
+    <script>
+        /**
+         * 装饰器模式出现的背景: 对它已有的功能做个拓展，只关心拓展出来的那部分新功能如何实现，也是针对未来的需求定义一个良好的基础框架，提高复用性和可维护性；
+         * 
+         * 如何实现装饰器模式：在针对旧的业务逻辑和新的业务逻辑单独封装起来，然后对函数和类进行拓展业务方法
+         * 
+         * 装饰器模式带来的作用：提高代码的复用性和可维护性，可读性更强。
+         * 
+         */
+
+        //  单例模式
+        class Modal {
+            static InstallModal() {
+                if (!Modal.instance) {
+                    Modal.instance = Modal.createModal()
+                }
+                return Modal.instance();
+            }
+            static createModal() {
+                let modal = null;
+                return function () {
+                    if (!modal) {
+                        modal = document.createElement("div");
+                        modal.id = "modal";
+                        modal.innerHTML = "全局唯一的Modal弹框";
+                        modal.style.display = "none";
+                        document.body.appendChild(modal)
+                    }
+                    return modal;
+                }
+            }
+        }
+
+        // 需求：点击关闭的时候，修改打开的文案为"快去登录" 点击登录的时候按钮置灰
+
+
+        // 封装打开弹框的逻辑
+        function openModal() {
+            const modal = Modal.InstallModal();
+            modal.style.display = "block";
+        }
+
+        // 封装关闭的逻辑
+        function closeModal() {
+            const modal = Modal.InstallModal();
+            if (modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 拓展的按钮置灰逻辑
+        function changeButStatus() {
+            document.querySelector(".open").setAttribute("disabled", true);
+        }
+
+        // 拓展的按钮文案逻辑
+        function changeButText() {
+            document.querySelector(".open").innerHTML = "快去登录"
+        }
+
+        // 拓展的移除disabled逻辑
+        function removeDisable() {
+            document.querySelector(".open").removeAttribute("disabled", false);
+        }
+
+        // 整合打开的逻辑
+        function OpenIntegration() {
+            openModal();
+            changeButStatus()
+        }
+        
+        // 整合关闭的逻辑
+        function CloseIntegration() {
+            removeDisable();
+            changeButText();
+            closeModal();
+        }
+
+        document.querySelector(".open").addEventListener("click", () => {
+            OpenIntegration();
+        })
+        
+        document.querySelector(".close").addEventListener("click", () => {
+            CloseIntegration();
+        })
+    </script>
+</body>
+
+</html>

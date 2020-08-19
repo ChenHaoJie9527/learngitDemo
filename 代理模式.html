@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 什么是代理模式：顾明思议，在某些情况下，一个对象不能直接访问另一个对象，需要通过第三方代理间接去访问才能达到目的，这叫代理模式，在现实中非常广泛；
+         * 借助 ES6的Proxy可以生动的展示
+         * 例子： 婚姻介绍所
+         */
+        //主体： 男性信息
+        const user = {
+            name: "zhangsan",
+            age: 25,
+            isVip: true,
+            isValidated: true
+        };
+        //接受礼物的规格
+        const presents = {
+            type: "玫瑰花",
+            price: 60
+        }
+        // 妹子信息
+        const girl = {
+            name: "小美", //名字
+            age: 18, //年龄
+            phone: "134****7861", //电话
+            career: "xxx", //职业
+            fakeAvatar: "xxxxx", //假头像
+            avatar: "xxxxx", //真实头像
+            bottomValue: 50, //// 拒收50块以下的礼物
+            presents: [], //接受礼物的数组
+            lastPresent: presents, //  // 记录最近一次收到的礼物
+        };
+        /**
+            需求： 
+                1. 验证实名登记 => 通过，允许查看年龄 职业 假照片； 不通过， 不允许查看并提示用户实名登记
+                2. 验证身份 => 如果实名过后，VIP身份，则允许查看真实电话和真实照片，如果不是VIP，提醒用户购买VIP
+                3. 会员间互送礼物，每个会员可以告知婚介所自己愿意接受的礼物的价格下限
+                    1. 礼物 => 礼物规格 => 礼物价格，礼物名称
+                    2. 送的第几次 => 记录次数 => 存储礼物 
+                    3. 验证 => 是否最后一次送的礼物 => 礼物价格是否低于拒收标准; 如果是最后一次且价格高于拒收标准，那么就礼物保存起来;
+        */
+        // 实名登记后可以查看的信息
+        const autonym = ["age", "career", "fakeAvatar"];
+        // 购买VIP可以查看的信息
+        const VIP = ["phone", "avatar"]
+        const res = new Proxy(girl, {
+            get(girl, key) {
+                // 验证实名登记和查看的信息
+                if (autonym.includes(key) && !user.isValidated) {
+                    alert("请实名登记")
+                    return
+                }
+                if (user.isValidated && VIP.includes(key) && user.isVip) {
+                    alert('只有VIP才可以查看该信息哦')
+                    return
+                }
+                return girl[key];
+            },
+            set(girl, key, value) {
+                if (key == "lastPresent") {
+                    if (value.price < girl.bottomValue) {
+                        alert("sorry，您的礼物被拒收了");
+                        return;
+                    } else {
+                        // 如果没有拒收，说明大于最低的价格，将礼物添加到数组里
+                        girl["lastPresent"] = value;
+                        girl["presents"] = [value];
+                        return;
+                    }
+                }
+            }
+        })
+
+        //访问具有VIP才能查看的信息
+        // const name = res.phone;
+        // res.lastPresent = {
+        //     type: "奔驰",
+        //     price: 60
+        // }
+        // console.log(res)
+    </script>
+</body>
+
+</html>

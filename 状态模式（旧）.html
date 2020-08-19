@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+            状态模式： 根据不同的状态，展现不同的内容， 状态分发 => 状态逻辑执行
+        */
+        const changeState = {
+            american(state) {
+                if (state == "american") {
+                    console.log('我只吐黑咖啡');
+                }
+            },
+            latte(state) {
+                if (state == "latte") {
+                    console.log(`给黑咖啡加点奶`);
+                }
+            },
+            vanillaLatte(state) {
+                if (state == "vanillaLatte") {
+                    console.log('黑咖啡加点奶再加香草糖浆');
+                }
+            },
+            mocha(state) {
+                if (state == "mocha") {
+                    console.log('黑咖啡加点奶再加点巧克力');
+                }
+            }
+        }
+
+        class inits {
+            static output(state) {
+                let res = "";
+                if (state instanceof Array || state instanceof Object) {
+                    res = [];
+                    for (const key in state) {
+                        res.push(state[key])
+                    }
+                    return res;
+                }
+                if (typeof state == "string") {
+                    res = state;
+                    return res;
+                }
+                return res;
+            }
+        }
+
+        class Coffee {
+            constructor(state, type) {
+                // 状态初始化
+                this.state = state;
+                this.typeCofee(this.state, type)
+            }
+            typeCofee(state, type) {
+                const res = inits.output(state);
+                if (typeof res == "array" || typeof res == "object") {
+                    for (const key in res) {
+                        changeState[res[key]](res[key]);
+                    }
+                    return;
+                }
+                changeState[res](res);
+            }
+        }
+
+        // const coffee = new Coffee(["american", "latte"], Array);
+        // const coffee = new Coffee({
+        //     key: "american",
+        //     name: "mocha"
+        // }, Object);
+        const coffee = new Coffee("mocha")
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /*
+            工厂函数： 将创建对象的过程进行单独封装；
+            目的： 实现无脑传参
+        */
+
+        // 不变： 名字 年龄 工种 职责
+        // 变： 工种不同，职责不同
+        function User(name, age, cearer, work) {
+            this.name = name;
+            this.age = age;
+            this.cearer = cearer;
+            this.work = work;
+        }
+
+        function Factroy(name, age, cearer) {
+            let work;
+            switch (cearer) {
+                case "coder":
+                    work = ["写代码", "写细分", "修bug"]
+                    break;
+                case "boss":
+                    work = ["会议室", "写RED", "催更"]
+                    break
+                case "yun":
+                    work = ["运维", "测试"]
+                    break
+                default:
+                    break;
+            }
+            return new User(name, age, cearer,work);
+        }
+        const res = new Factroy("张三", "18", "coder");
+        console.log(res);
+    </script>
+</body>
+
+</html>

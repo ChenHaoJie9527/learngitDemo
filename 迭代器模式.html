@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 迭代器对象全凭迭代器生成函数帮我们生成。在ES6中，实现一个迭代器生成函数并不是什么难事儿，因为ES6早帮我们考虑好了全套的解决方案，内置了贴心的生成器（Generator）供我们使用：
+         */
+        //    编写一个迭代器生产函数
+        // function iteratorGenerator(list) {
+        //     //idx记录当前访问的索引
+        //     let idx = 0;
+        //     // 记录传入集合的长度
+        //     let len = list.length;
+        //     return {
+        //         next() {
+        //             //如果索引值还没有超出当前长度的话
+        //             let done = idx >= len;
+        //             // 如果done是False,则继续取值
+        //             let value = !done ? list[idx] : undefined;
+        //             //将当前值返回
+        //             return {
+        //                 done,
+        //                 value
+        //             }
+        //         }
+        //     }
+        // }
+        // const inter = iteratorGenerator([1, 2, 3, 4, 5, 6]);
+        // inter.next()
+        // inter.next()
+        // inter.next()
+    </script>
+</body>
+
+</html>

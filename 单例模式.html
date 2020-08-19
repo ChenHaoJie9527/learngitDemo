@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+            单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点，这样的模式就叫做单例模式。
+            要如何才能保证一个类仅有一个实例呐？
+            要做到这一点，就需要构造函数具备判断自己是否已经创建过一个实例的能力。
+        */
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            show() {
+                console.log("我是一个单例对象");
+            }
+            static getIstan(name, age) {
+                // 判断时候已经new过1个实例
+                if (!Person.instance) {
+                    // 若这个实例不存在，那么久先创建它
+                    Person.instance = new Person();
+                }
+                // 如果这个唯一的实例已经存在，则直接返回
+                return Person.instance;
+            }
+        }
+        const s1 = Person.getIstan("张三", 18);
+        const s2 = Person.getIstan("李四", 20);
+        console.log(s1 == s2);
+    </script>
+</body>
+
+</html>

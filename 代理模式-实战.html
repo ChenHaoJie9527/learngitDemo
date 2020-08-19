@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .id {
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+
+        .id>p {
+            width: 100%;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="id">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+        <p>4</p>
+        <p>5</p>
+    </div>
+
+    <script>
+        /**
+            代理模式：事件代理、虚拟代理、缓存代理和保护代理来进行;
+        */
+        //事件代理: 在处理一些大量的点击事件时，作用于父级元素的子级
+        // 事件代理，它可以很大程度上提高我们代码的性能。
+        // document.querySelector(".id").addEventListener("click", (e) => {
+        //     // 识别是否是目标子元素
+        //     if (e.target.tagName == "P") {
+        //         e.preventDefault();
+        //         alert(`我是${e.target.innerText}`);
+        //     }
+        // })
+
+        /**
+            缓存代理：缓存代理比较好理解，它应用于一些计算量较大的场景里。
+            在这种场景下，我们需要“用空间换时间”——当我们需要用到某个已经计算过的值的时候，不想再耗时进行二次计算，而是希望能从内存里去取出现成的计算结果。
+            这种场景下，就需要一个代理来帮我们在进行计算的同时，进行计算结果的缓存了
+        */
+        //对传入的参数进行求和
+        // const addAll = function () {
+        //     console.log("计算");
+        //     let res = 0;
+        //     const len = arguments.length;
+        //     for (let i = 0; i < len; i++) {
+        //         res += arguments[i]
+        //     }
+        //     return res;
+        // }
+        // const res = addAll(1,2,3,4,54,5,6);
+        // console.log(res)
+
+        // //缓存代理，变计算变缓存
+        // const proxyAll = (function () {
+        //     //创建数据缓存池
+        //     const args = {};
+        //     return function () {
+        //         // 将入参转化为一个唯一的入参字符串
+        //         const res = Array.prototype.join.call(arguments);
+        //         //  // 检查本次入参是否有对应的计算结果
+        //         if (res in args) {
+        //             // 如果有 则返回缓存池里现成的结果
+        //             return args[res];
+        //         }
+        //         return args[res] = addAll(...arguments);
+        //     }
+        // })()
+        // const proxyRes = proxyAll(1,2,3,4,54,5,6);
+        // console.log(proxyRes)
+    </script>
+</body>
+
+</html>

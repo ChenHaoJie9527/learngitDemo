@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            策略模式：用于拆解原本的逻辑，然后基于分发需求，再重新组合成新的逻辑，形成更容易维护和可复用性更强的逻辑
+            需求：   当价格类型为“预售价”时，满 100 - 20，不满 100 打 9 折
+                    当价格类型为“大促价”时，满 100 - 30，不满 100 打 8 折
+                    当价格类型为“返场价”时，满 200 - 50，不叠加
+                    当价格类型为“尝鲜价”时，直接打 5 折
+        */
+        // 预售价 => pre
+        // 大促价 => onSlane
+        // 返厂价 => backs
+        // 尝鲜价 => feash
+
+        const priceVIP = {
+            pre(orignPrice) {
+                if (orignPrice >= 100) {
+                    return orignPrice - 20;
+                }
+                return orignPrice * 0.9;
+            },
+            onSlane(orignPrice) {
+                if (orignPrice >= 100) {
+                    return orignPrice - 30;
+                }
+                return orignPrice * 0.8;
+            },
+            backs(orignPrice) {
+                if (orignPrice >= 200) {
+                    return orignPrice - 50;
+                }
+                return orignPrice;
+            },
+            feash(orignPrice) {
+                return orignPrice * 0.5;
+            },
+            newUser(orignPrice) {
+                if (orignPrice >= 100) {
+                    return orignPrice - 50;
+                }
+                return orignPrice * 0.6;
+            },
+            acquaintance(orignPrice) {
+                if (orignPrice >= 200) {
+                    return orignPrice - 100;
+                }
+                return orignPrice * 0.5;
+            }
+        }
+
+        function askPrice(tag, orignPrice) {
+            // if (tag == "pre") {
+            //     // if (orignPrice >= 100) {
+            //     //     return orignPrice - 20;
+            //     // }
+            //     // return orignPrice * 0.9;
+            //     return pre(orignPrice);
+            // }
+            // if (tag == "onSlane") {
+            //     // if (orignPrice >= 100) {
+            //     //     return orignPrice - 30;
+            //     // }
+            //     // return orignPrice * 0.8;
+            //     return onSlane(orignPrice);
+            // }
+            // if (tag == "backs") {
+            //     // if (orignPrice >= 200) {
+            //     //     return orignPrice - 50;
+            //     // }
+            //     // return orignPrice;
+            //     return backs(orignPrice);
+            // }
+            // if (tag == "feash") {
+            //     // return orignPrice * 0.5;
+            //     return feash(orignPrice);
+            // }
+
+            // if (tag == "newUser") {
+            //     return newUser(orignPrice)
+            // }
+            return priceVIP[tag](orignPrice);
+        }
+        const res = askPrice("acquaintance", 110);
+        console.log(res)
+        //基于单一原则进行封装 => 开放封闭原则
+        // function pre(orignPrice) {
+        //     if (orignPrice >= 100) {
+        //         return orignPrice - 20;
+        //     }
+        //     return orignPrice * 0.9;
+        // }
+
+        // function onSlane(orignPrice) {
+        //     if (orignPrice >= 100) {
+        //         return orignPrice - 30;
+        //     }
+        //     return orignPrice * 0.8;
+        // }
+
+        // function backs(orignPrice) {
+        //     if (orignPrice >= 200) {
+        //         return orignPrice - 50;
+        //     }
+        //     return orignPrice;
+        // }
+
+        // function feash(orignPrice) {
+        //     return orignPrice * 0.5;
+        // }
+
+        // function newUser(orignPrice) {
+        //     if (orignPrice >= 100) {
+        //         return orignPrice - 50;
+        //     }
+        //     return orignPrice * 0.6;
+        // }
+    </script>
+</body>
+
+</html>

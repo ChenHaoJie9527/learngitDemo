@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 原型模式：原型模式不仅是一种设计模式，它还是一种编程范式（programming paradigm），是 JavaScript 面向对象系统实现的根基。
+         * 原型编程范式的核心思想就是利用实例来描述对象，用实例作为定义对象和继承的基础。在 JavaScript 中，原型编程范式的体现就是基于原型链的继承。这其中，对原型、原型链的理解是关键。
+         * 原型：在 JavaScript 中，每个构造函数都拥有一个prototype属性，它指向构造函数的原型对象，这个原型对象中有一个 construtor 属性指回构造函数；
+         * 每个实例都有一个__proto__属性，当我们使用构造函数去创建实例时，实例的__proto__属性就会指向构造函数的原型对象。
+         * 深浅拷贝问题是针对引用数据类型，因为JS中的变量类型分为值类型和引用类型，对值类型进行复制操作会对值进行一份拷贝，而对引用类型赋值，则会进行地址的拷贝
+         * 最终两个变量指向同一份数据
+         */
+        // 创建一个Dog构造函数
+        // function Dog(name, age) {
+        //     this.name = name
+        //     this.age = age
+        // }
+        // // 原型上的方法
+        // Dog.prototype.eat = function () {
+        //     console.log('肉骨头真好吃')
+        // }
+
+        // // 使用Dog构造函数创建dog实例
+        // const dog = new Dog('旺财', 3)
+
+        // dog.eat();
+        // // 输出"[object Object]"
+        // dog.toString()
+
+        /**
+         * 深拷贝：浅拷贝 + 递归
+         *      1.json.strtingfly
+         *      2.递归循环
+         */
+
+        // 序列化与反序列化 缺陷是无法识别undefined 和 函数
+        const obj = {
+            name: "zhangsan",
+            age: 280,
+            list: ['coding', 'hiking', 'running'],
+            a: undefined,
+            b: function () {}
+        }
+        // const obj1 = JSON.parse(JSON.stringify(obj));
+        // console.log(obj);
+        // obj1.age = 300;
+        // console.log(obj1);
+
+
+        // const b = [1,2,3,4]
+
+        // // 递归
+        // function deepClone(obj) {
+        //     //如果不是obj或者null
+        //     if (typeof obj != "object" || typeof obj == "null") {
+        //         return obj;
+        //     }
+        //     // 定义结果对象
+        //     let copy = {};
+        //     // 如果是数组，那么久定义数组
+        //     if (obj.constructor == Array) {
+        //         copy = [];
+        //     }
+        //     // 遍历对象key
+        //     for (const key in obj) {
+        //         // 如果对象存在key属性
+        //         if (obj.hasOwnProperty(key)) {
+        //             // 调用函数递归循环
+        //             copy[key] = deepClone(obj[key])
+        //         }
+        //     }
+        //     return copy;
+        // }
+        // const res = deepClone(obj);
+        // console.log(res);
+
+        /**
+         * 浅拷贝： 遍历对象属性
+         * 
+        */
+
+        // function shalMater(obj){
+        //     let marget = {};
+        //     for (const key in obj) {
+        //         if (obj.hasOwnProperty(key)) {
+        //             marget[key] = obj[key]
+        //         }
+        //     }
+        //     return marget;
+        // }
+        // const res = shalMater(obj);
+        // console.log(res);
+
+
+    </script>
+</body>
+
+</html>
