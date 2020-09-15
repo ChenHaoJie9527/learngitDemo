@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="btn1">防抖</button>
+    <script>
+        /**
+            防抖：在事件被触发时，延迟n秒后再触发回调函数，如果n秒内又触发了事件，则会重新开始计算时间（n秒内最后一次生效）
+        */
+        function debounce(fn, delay) {
+            let timer;
+            return function () {
+                if (timer) {
+                    clearInterval(timer);
+                }
+                timer = setTimeout(() => {
+                    fn.apply(this);
+                }, delay)
+            }
+
+        }
+        let cont = 0;
+        const myEvent = function (e) {
+            console.log("防抖", cont);
+        }
+        const btn1 = document.querySelector(".btn1");
+        btn1.addEventListener("click", debounce(myEvent, 1000));
+    </script>
+</body>
+
+</html>

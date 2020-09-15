@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="val" value="">
+    <script>
+        /**
+            节流： 一段时间内只能触发一次，如果在这段时间内多次触发，只有第一次生效会触发回调函数，一段时间后才能再次触发
+        */
+        // 简易版
+        const inp1 = document.querySelector(".val");
+
+        function throlle(fn, delay) {
+            let timer;
+            return function () {
+                if (timer) {
+                    return
+                }
+                timer = true;
+                setTimeout(() => {
+                    timer = false;
+                    fn.apply(this, arguments)
+                }, delay)
+            }
+        };
+        let fn = function(e){
+            console.log(e.target.value);
+        }
+        inp1.addEventListener("keydown",throlle(fn,2000));
+    </script>
+</body>
+
+</html>

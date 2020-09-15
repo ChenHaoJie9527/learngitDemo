@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档片段</title>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        /**
+         * 文档片段：DocumentFragment；
+         * let fragment = document.createDocumentFragment();
+         * fragment 是一个指向空DocumentFragment对象的引用。
+         * DocumentFragment是DOM节点，但不是DOM树的一部分，通常是用例是创建文档片段，将元素附加到文档片段中，然后再讲文档片段附加到DOM树上
+         * 在DOM树种，文档片段会被其所有的子元素给替代
+         * 性能：因为文档片段存在于内存中，并不在DOM树中，所以将子元素插入到文档片段时不会引起页面回流（对元素位置和几何上的计算）。因此，使用文档片段通常会带来更好的性能。
+        */
+        const box = document.querySelector(".box");
+        const fragment = document.createDocumentFragment();
+        var browsers = ['Firefox', 'Chrome', 'Opera', 'Safari', 'Internet Explorer'];
+        browsers.forEach(item=>{
+            const p = document.createElement("p");
+            p.textContent = item;
+            fragment.appendChild(p);
+        })
+        box.appendChild(fragment);
+    </script>
+</body>
+</html>
