@@ -9,7 +9,8 @@ interface x2 {
     x: number,
     p: boolean
 };
-let obj: x1 & x2 = Object.assign({}, {
+type opts = x1 & x2;
+let obj: opts = Object.assign({}, {
     x: 10,
     y: 10
 }, { p: false,z: "10" });

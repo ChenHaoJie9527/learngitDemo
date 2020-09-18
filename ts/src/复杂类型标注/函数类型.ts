@@ -7,7 +7,7 @@
 interface IFunc {
     (y: number, x?: string): string | number,
 };
-let fn: IFunc = (y, x = "hello"): string | number => {
+let fn: IFunc = (y, x = "hello") => {
     console.log(this);
     return y;
 };
