@@ -4,18 +4,17 @@
  * 实现条件：
  *
  */
-function showOrhide(ele, attr, value) {
-    if (attr === "display") {
-        ele.style.display = `${value}`;
-    }
-    if (attr === "opacity") {
-        ele.style.display = `block`;
-        ele.style.opacity = `${value}`;
-    }
-}
-;
-let div = document.querySelector("div");
-if (div) {
-    // showOrhide(div, "display", "none");
-    showOrhide(div, "opacity", 1);
-}
+// class Calculator {
+//     add(a: number, b: number): number;
+//     add(a: string, b: string): string;
+//     add(a: string, b: number): string;
+//     add(a: number, b: string): string;
+//     add(a: Combinable, b: Combinable) {
+//       if (typeof a === "string" || typeof b === "string") {
+//         return a.toString() + b.toString();
+//       }
+//       return a + b;
+//     }
+//   }
+//   const calculator = new Calculator();
+//   const result = calculator.add("Semlinker", " Kakuqo");
