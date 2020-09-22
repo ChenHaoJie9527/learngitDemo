@@ -54,6 +54,7 @@ class Ponits {
         public age?: number
     ) {
         //可以省略初始化赋值
+
     };
     postChart(title: string, content?: string) {
         console.log(`${this.username}发表了一篇文章：${title}`);
@@ -95,3 +96,146 @@ class Ponits {
 // };
 // let vip1 = new Vip("李四", 10);
 // vip1.postChart("《背影》");
+
+class Vip extends Ponits {
+    constructor(username: string, age: number, public scroe = 0) {
+        super(username, age);
+    }
+    //重载函数 参数个数，参数类型不同
+    postChart(title: string, content: string): void;
+    postChart(title: string, content: string, file: string): void;
+    postChart(title: string, content: string, file?: string) {
+        super.postChart(title, content);
+        if (typeof file === "string") {
+            this.postAtta(file);
+        }
+    };
+    postAtta(file: string) {
+        console.log(`${this.username} 上传了一个附件： ${file}`);
+    }
+}
+
+let vip1 = new Vip("张三", 18, 20);
+vip1.postChart("标题", "内容", "xxx.png");
+
+/**
+ * 修饰符: ts提供了四种修饰符，方便我们对类的属性方法进行一定的访问控制
+ *  1. public: 公有，默认是公有
+ *  2. protected: 受保护
+ *  3. private: 私有
+ *  4. readony: 只读
+ * 每个修饰符的访问级别也不一样：
+ *  1. public:
+ *          a. 自身
+ *          b. 子类
+ *          c. 类外
+ *  2. protected:
+ *          a. 自身
+ *          b. 子类
+ *  3. private:
+ *          a. 自身
+ *  4. readonly:
+ *          a. 自身
+ *          b. 子类
+ *          c. 类外
+ *  readonly只读修饰符只能针对成员属性使用，且必须在声明时或构造函数里被初始化
+ */
+
+class Init {
+    constructor(
+        // 可以访问，但是一旦确定下来无法修改
+        readonly id: number,
+        //  可以访问，但是外部不能更改
+        protected username: string,
+        //  外部包括子类不能访问，也不能修改
+        private password: string,
+        // 外部，子类，自身都可以访问
+        public sorce: string
+    ) {
+
+    }
+}
+let init = new Init(10, "张三", "123", "用户");
+// init.id = 123; // error 只能访问，不可修改
+// init.username = "李四"; // error 外部实例无法访问，只能在类中使用
+init.sorce = "管理员";
+// init.password = "1231231"; // error 私有属性，只能在类中使用
+
+/**
+ * 寄存器：
+ *      寄存器可以使我们在对类成员属性进行更加细腻的控制
+ *      通过寄存器可以对类成员属性进行拦截和控制，更好的设置访问便捷
+ * 分两种：
+ *      getter
+ *          - getter是访问控制器，在访问指定成员属性时调用
+ *      setter
+ *          - setter组件：
+ *            设置控制器，当设置指定成员属性时调用
+ *              1. 函数式组件
+ *              2. 类式组件
+ *              3. props与state
+ *              4. 组件通信
+ *              5. 表单与受控组件
+ *              
+ */
+class Prox {
+    constructor(
+        readonly _id: number,
+        readonly _username: string,
+        private _password?: string
+    ) {
+
+    };
+    public set password(password: string) {
+        if (password.length >= 6) {
+            this._password = password;
+        }
+    };
+    public get getPassword() {
+        if (typeof this._password !== "undefined") {
+            return this._password;
+        }
+        return undefined;
+    }
+};
+// let prox = new Prox(10, "chj", "123");
+// let dialog = prox.getPassword;
+// if (typeof dialog === "undefined") {
+//     alert("当前密码为空")
+// } else if (typeof dialog === "string") {
+//     alert(dialog)
+// }
+
+/**
+ * 静态属性：指的是给；类本身添加成员，并且只能使用类去访问该属性
+ * 关键字 static 声明静态属性，并且还可以结合其余四种修饰符进行修饰属性成员
+ * 注意：
+ *      1. 类的静态成员是属于类的，不能通过实例对象来进行访问，而是直接通过类名访问
+ *      2. 静态成员也可以通过访问修饰符进行修饰
+ *      3. 静态成员属性一般约定为全大写
+ */
+// type ALL = "png" | "gif" | "jpg" | "jpeg";
+// class Npx extends Prox {
+//     static readonly ALLOW: Array<ALL> = ["png", "gif", "jpg", "jpeg"];
+//     constructor(
+//         id: number,
+//         username: string,
+//         private _allowFile: Array<ALL>
+//     ) {
+//         super(id, username);
+//     };
+//     init() {
+//         //  Npx类型用户允许上传所有类型的一种
+//         console.log(Npx.ALLOW);
+//         // 实例化永华上传类型只能是一种
+//         console.log(this._allowFile);
+//     }
+// };
+// let npx1 = new Npx(10, "张三", ["jpeg", "gif"]);
+// console.log(npx1);
+// console.log(Npx.ALLOW);
+// npx1.init();
+
+
+
+
