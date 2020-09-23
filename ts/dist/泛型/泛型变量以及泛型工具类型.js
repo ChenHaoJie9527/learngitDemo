@@ -1,7 +1,44 @@
-/**
- * 泛型变量是TS的一种约定好的规范，也就是说使用大写字母A-Z定义的类型变量都属于泛型
- *  1. T： 表示一个TypeScript类型
- *  2. K： 表示对象中的键类型
- *  3. V： 表示对象中的值类型
- *  4. E： 表示元素类型
- */
+const sem = {
+    name: "张三",
+    age: 10
+};
+function Todo(x) {
+    return [x];
+}
+let sefsad = 10;
+let esaxz = typeof sefsad;
+const Prejects = {
+    name: "张三",
+    age: 10
+};
+function Lib(x) {
+    return x;
+}
+;
+Lib({
+    a: "张三",
+    b: "李四",
+    c: "王五"
+});
+function Inster(x) {
+}
+;
+Inster("mrke");
+function Loger(val) {
+    console.log(val.length);
+    return val;
+}
+;
+Loger("qweadadsa");
+function updateTodo(todo, filesUpdate) {
+    return {
+        todo,
+        filesUpdate
+    };
+}
+;
+const res = updateTodo({
+    title: "1231",
+    despreter: "123123"
+}, {});
+console.log(res);
