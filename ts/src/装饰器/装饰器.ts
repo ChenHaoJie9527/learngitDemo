@@ -125,7 +125,7 @@
 // function LogPrototypes(params: string | undefined) {
 //     console.log(params); //传的参数 12312312321
 //         return function(target: any, attr: any){
-//             console.log(target); //由于是对于静态成员，所以是类的构造函数
+//             console.log(target); //实例成员来说是类的原型对象
 //             console.log(attr); // 静态成员的名字
 //             target[attr] = params;
 //         }
@@ -203,81 +203,81 @@
  *      3. 参数在函数参数列表中的索引
  */
 
-// function LogClient(params: any) {
-//     return function (target: any, paramsName: any, paramsIndex: any) {
-//         console.log(target);
-//         console.log(paramsName);
-//         console.log(paramsIndex);
-//         target.apiUrl = params;
-//     }
-// }
+function LogClient(params?: string) {
+    return function (target: any, paramsName: any, paramsIndex: any) {
+        console.log(target);
+        console.log(paramsName);
+        console.log(paramsIndex);
+        target.apiUrl = params;
+    }
+}
 
-// class HttpClient {
-//     constructor(
-//         public url?: any | undefined
-//     ) {
+class HttpClient {
+    constructor(
+        public url?: any | undefined
+    ) {
 
-//     }
-//     getData(
-//         @LogClient("hello") id: number
-//     ) {
-//         console.log(id);
-//     }
-// }
-// let http: any = new HttpClient();
-// http.getData(123);
+    }
+    getData(
+        @LogClient("hello") id: number
+    ) {
+        console.log(id);
+    }
+}
+let http: any = new HttpClient();
+http.getData(123);
 // console.log(http.apiUrl);
 /**
  * 装饰器的执行顺序：属性>方法>方法参数>类，如果有多个同样的装饰器，先执行后面的
+ *  //属性装饰器
+    //方法装饰器
+    //方法参数装饰器2
+    //方法参数装饰器1
+    //类装饰器2
+    //类装饰器1
  */
-function logClass1(params: any) {
-    return function (target: any) {
-        console.log("装饰器1");
-    }
-}
-function logClass2(params: any) {
-    return function (target: any) {
-        console.log("装饰器2");
-    }
-}
-function logAttribute(params?: string) {
-    return function (target: any, attrName: any) {
-        console.log("属性装饰器");
-    }
-}
-function logMethod(params?: string) {
-    return function (target: any, attrName: any, desc: any) {
-        console.log("方法装饰器");
-    }
-}
-function logParams1(params?: string) {
-    return function (target: any, attrName: any, desc: any) {
-        console.log("方法参数装饰器1");
-    }
-}
-function logParams2(params?: string) {
-    return function (target: any, attrName: any, desc: any) {
-        console.log("方法参数装饰器1=2");
-    }
-}
-@logClass2("aaa")
-@logClass2("xxx")
-class HttpClient {
-    @logAttribute()
-    public apiUrl: any | undefined;
-    constructor() { }
-    @logMethod()
-    getData() {
-        return true;
-    }
-    setData(@logParams1() attr1: any, @logParams2() attr2: any) {
+// function logClass1(params: any) {
+//     return function (target: any) {
+//         console.log("装饰器1");
+//     }
+// }
+// function logClass2(params: any) {
+//     return function (target: any) {
+//         console.log("装饰器2");
+//     }
+// }
+// function logAttribute(params?: string) {
+//     return function (target: any, attrName: any) {
+//         console.log("属性装饰器");
+//     }
+// }
+// function logMethod(params?: string) {
+//     return function (target: any, attrName: any, desc: any) {
+//         console.log("方法装饰器");
+//     }
+// }
+// function logParams1(params?: string) {
+//     return function (target: any, attrName: any, desc: any) {
+//         console.log("方法参数装饰器1");
+//     }
+// }
+// function logParams2(params?: string) {
+//     return function (target: any, attrName: any, desc: any) {
+//         console.log("方法参数装饰器1=2");
+//     }
+// }
+// @logClass2("aaa")
+// @logClass2("xxx")
+// class HttpClient {
+//     @logAttribute()
+//     public apiUrl: any | undefined;
+//     constructor() { }
+//     @logMethod()
+//     getData() {
+//         return true;
+//     }
+//     setData(@logParams1() attr1: any, @logParams2() attr2: any) {
 
-    }
-}
-var http: any = new HttpClient();
-//属性装饰器
-//方法装饰器
-//方法参数装饰器2
-//方法参数装饰器1
-//类装饰器2
-//类装饰器1
+//     }
+// }
+// var http: any = new HttpClient();
