@@ -22,3 +22,11 @@ let personWithAge = Object.assign(Object.assign({}, personlow), { age: 33 });
 // 获取除了某些项外的其它项
 let { name: personlowName } = personlow, rest = __rest(personlow, ["name"]);
 console.log(personlowName, rest);
+function getNumber({ one }) {
+    return one;
+}
+const one = getNumber({ one: 1 });
+const xiaoJieJies = [
+    { name: "刘英", age: 18 },
+    { name: "谢大脚", age: 28 },
+];
